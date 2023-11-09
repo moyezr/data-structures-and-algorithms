@@ -4,18 +4,20 @@ import java.sql.SQLOutput;
 
 public class Patterns {
 
-    public static void print(int r) {
-        if (r == 0) {
-           return;
+    public static void triangle(int r, int c) {
+        if (r == 1) {
+            return;
         }
-        for(int i = 0; i < r; i++)
+        if (c == 1) {
+            System.out.println();
+            triangle(r - 1, r - 1);
+        } else {
             System.out.print("* ");
-
-        System.out.println();
-        print(r - 1);
+            triangle(r, c - 1);
+        }
     }
 
     public static void main(String[] args) {
-        print(5);
+        triangle(6, 6);
     }
 }
