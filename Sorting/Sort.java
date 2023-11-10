@@ -35,6 +35,7 @@ public class Sort {
         return arr;
     }
 
+    // Insertion Sort Algo by Piysuh Garg
     public void insertionSort(int arr[]) {
         for(int i = 1; i < arr.length; i++) {
             int currentElement = arr[i];
@@ -47,6 +48,23 @@ public class Sort {
             }
 
             arr[j + 1] = currentElement;
+        }
+    }
+
+    static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    public void insertionSortKunal(int arr[]) {
+        for(int i =0; i < arr.length - 1 ; i++ ) {
+            for(int j = i + 1; j > 0; j--) {
+             if(arr[j] < arr[j - 1]) {
+                swap(arr, j, j - 1);
+             } else {
+                 break;
+             }
+            }
         }
     }
 

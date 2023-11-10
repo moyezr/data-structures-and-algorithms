@@ -1,5 +1,7 @@
 package Sorting;
 
+import java.util.Arrays;
+
 public class Main {
 
     public static void print(int arr[]) {
@@ -15,16 +17,20 @@ public class Main {
 
         Sort sorter = new Sort();
 
-        int arr[] = {10, 2, 3, 4, 1, -2, 11, 12, -1, -9, 13};
+//        int arr[] = {10, 2, 3, 4, 1, -2, 11, 12, -1, -9, 13};
 
-        System.out.print("Array before sorting --> ");
-        print(arr);
-        long startTime = System.nanoTime();
-        sorter.quickSort(arr);
-        long endTIme = System.nanoTime();
-        System.out.print("Array after sorting --> ");
-        print(arr);
+            int arr[] = {4, 5, 1, 2, 3};
 
-        System.out.println("Time Taken -> " + (endTIme - startTime));
+            sorter.insertionSortKunal(arr);
+        System.out.println(Arrays.toString(arr));
+//        System.out.print("Array before sorting --> ");
+//        print(arr);
+//        long startTime = System.nanoTime();
+//        sorter.quickSort(arr);
+//        long endTIme = System.nanoTime();
+//        System.out.print("Array after sorting --> ");
+//        print(arr);
+
+//        System.out.println("Time Taken -> " + (endTIme - startTime));
     }
 }
