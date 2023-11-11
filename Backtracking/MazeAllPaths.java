@@ -1,5 +1,6 @@
 package Backtracking;
 
+import javax.swing.tree.TreeNode;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -21,6 +22,7 @@ public class MazeAllPaths {
         allPathPrint("", maze, 0, 0, arr, 0);
 
     }
+
 
     static void allPath(String p, boolean[][] maze, int r, int c) {
         if (r == maze.length - 1 && c == maze[0].length - 1) {

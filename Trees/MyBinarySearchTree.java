@@ -14,39 +14,57 @@ class TreeNode {
         return "Value = " + this.data;
     }
 }
+
 public class MyBinarySearchTree {
-private TreeNode root;
+    private TreeNode root;
 
-public MyBinarySearchTree() {
+    public MyBinarySearchTree() {
         this.root = null;
-}
-
-public void insert(int value) {
-    TreeNode node = new TreeNode(value);
-    if(root == null) {
-        root = node;
-        return;
     }
 
-    TreeNode current = root;
+    public void insert(int value) {
+//        TreeNode node = new TreeNode(value);
+//        if (root == null) {
+//            root = node;
+//            return;
+//        }
+//
+//        TreeNode current = root;
+//
+//        while (true) {
+//            if (value <= current.data) { // Go left
+//                if (current.leftChild == null) {
+//                    current.leftChild = node;
+//                    break;
+//                }
+//
+//                current = current.leftChild;
+//            } else { // Go Right
+//                if (current.rightChild == null) {
+//                    current.rightChild = node;
+//                    break;
+//                }
+//                current = current.rightChild;
+//            }
+//        }
+        root = insert(this.root, value);
+    }
 
-    while(true) {
-        if(value <= current.data) { // Go left
-            if(current.leftChild == null) {
-                current.leftChild = node;
-                break;
-            }
+    private TreeNode insert(TreeNode root, int value) {
 
-            current = current.leftChild;
-        } else { // Go Right
-            if(current.rightChild == null) {
-                current.rightChild = node;
-                break;
-            }
-            current = current.rightChild;
+        if (root == null) {
+            root = new TreeNode(value);
+            return root;
         }
+
+        if (value <= root.data) {
+            root.leftChild = insert(root.leftChild, value);
+        } else {
+            root.rightChild = insert(root.rightChild, value);
+        }
+
+        return root;
+
+
     }
-}
-
-
 }
