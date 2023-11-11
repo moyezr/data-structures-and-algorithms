@@ -64,7 +64,22 @@ public class MyBinarySearchTree {
         }
 
         return root;
+    }
 
+    public boolean findNode(int value) {
+        return findNode(this.root, value);
+    }
+    private boolean findNode(TreeNode root, int value) {
+        if(root == null) {
+            return false;
+        }
 
+        if(value == root.data) {
+            return true;
+        } else if(value <= root.data) {
+         return findNode(root.leftChild, value);
+        } else {
+            return findNode(root.rightChild, value);
+        }
     }
 }

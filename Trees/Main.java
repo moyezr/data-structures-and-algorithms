@@ -9,5 +9,7 @@ public class Main {
         for(int num: nums) {
             tree.insert(num);
         }
+
+        System.out.println(tree.findNode(-24));
     }
 }
