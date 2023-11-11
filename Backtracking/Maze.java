@@ -7,13 +7,23 @@ public class Maze {
 
     public static void main(String[] args) {
 //        System.out.println(count(3, 3));
-        ArrayList<String> arr = new ArrayList<>();
+//        ArrayList<String> arr = new ArrayList<>();
+//
+//
+//        path(3, 3, "", arr);
+//
+//        System.out.println(arr);
 
 
-        path(3, 3, "", arr);
+        /* Testing for maze with restrictions problem */
 
-        System.out.println(arr);
+        boolean[][] maze = {
+                {true, true, true},
+                {true, false, true},
+                {true, true, true},
+        };
 
+        pathWithRestrictions("", maze, 0, 0);
 
     }
 
@@ -36,14 +46,31 @@ public class Maze {
             return;
         }
 
-        if (r > 1) {
+        if (r  > 1) {
             path(r - 1, c, ans + "D", arr);
         }
         if (c > 1) {
             path(r, c - 1, ans + "R", arr);
         }
+    }
 
+    static void pathWithRestrictions(String p, boolean[][] maze, int r, int c)  {
+        if(r == maze.length - 1 && c == maze[0].length - 1)  {
+            System.out.print(p + " ");
+            return;
+        }
 
+        if(!maze[r][c]) {
+            return;
+        }
+
+        if(r < maze.length - 1) {
+            pathWithRestrictions(p + "D", maze, r + 1, c);
+        }
+
+        if(c < maze[0].length - 1) {
+            pathWithRestrictions(p + "R", maze, r, c + 1);
+        }
     }
 
 
