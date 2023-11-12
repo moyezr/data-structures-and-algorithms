@@ -1,6 +1,13 @@
 package Trees;
 
 
+import com.sun.source.tree.Tree;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+
 class TreeNode {
     int data;
     TreeNode leftChild;
@@ -69,15 +76,16 @@ public class MyBinarySearchTree {
     public boolean findNode(int value) {
         return findNode(this.root, value);
     }
+
     private boolean findNode(TreeNode root, int value) {
-        if(root == null) {
+        if (root == null) {
             return false;
         }
 
-        if(value == root.data) {
+        if (value == root.data) {
             return true;
-        } else if(value < root.data) {
-         return findNode(root.leftChild, value);
+        } else if (value < root.data) {
+            return findNode(root.leftChild, value);
         } else {
             return findNode(root.rightChild, value);
         }
@@ -86,8 +94,9 @@ public class MyBinarySearchTree {
     public void preOrderTraversal() {
         preOrderTraversal(root);
     }
+
     private void preOrderTraversal(TreeNode root) {
-        if(root == null) return;
+        if (root == null) return;
 
         // Pre-Order: Root -> Left -> Right
 
@@ -101,7 +110,7 @@ public class MyBinarySearchTree {
     }
 
     private void postOrderTraversal(TreeNode root) {
-        if(root == null) return;
+        if (root == null) return;
 
         // Post-Order: Left -> Right -> Root
         postOrderTraversal(root.leftChild);
@@ -114,7 +123,7 @@ public class MyBinarySearchTree {
     }
 
     private void inOrderTraversal(TreeNode root) {
-        if(root == null) return;
+        if (root == null) return;
 
         // InOrder: Left -> Root -> Right
         inOrderTraversal(root.leftChild);
@@ -125,14 +134,15 @@ public class MyBinarySearchTree {
     public int findDepth(int value) {
         return findDepth(root, value, 0);
     }
-    private int findDepth(TreeNode root, int value, int depth){
-        if(root == null) {
+
+    private int findDepth(TreeNode root, int value, int depth) {
+        if (root == null) {
             return -1;
         }
 
-        if(root.data == value) {
+        if (root.data == value) {
             return depth;
-        } else if(value < root.data) {
+        } else if (value < root.data) {
             return findDepth(root.leftChild, value, depth + 1);
         } else return findDepth(root.rightChild, value, depth + 1);
     }
@@ -142,9 +152,9 @@ public class MyBinarySearchTree {
     }
 
     private int heightOfTree(TreeNode root, int value) {
-        if(root == null) return -1;
+        if (root == null) return -1;
 
-        if(root.leftChild == null && root.rightChild == null) {
+        if (root.leftChild == null && root.rightChild == null) {
             return 0;
         }
 
@@ -159,13 +169,13 @@ public class MyBinarySearchTree {
 
 
     private int heightOfNode(TreeNode root, int value) {
-        if(root == null) {
+        if (root == null) {
             return -1;
         }
 
-        if(root.data == value) {
+        if (root.data == value) {
             return heightOfTree(root, value);
-        } else if(value < root.data) {
+        } else if (value < root.data) {
             return heightOfTree(root.leftChild, value);
         } else {
             return heightOfTree(root.rightChild, value);
@@ -173,22 +183,23 @@ public class MyBinarySearchTree {
     }
 
     private TreeNode getMin(TreeNode root) {
-        if(root.leftChild == null) {
+        if (root.leftChild == null) {
             return root;
         }
         return getMin(root.leftChild);
     }
+
     public TreeNode getMin() {
-        if(root == null) return null;
+        if (root == null) return null;
         return getMin(root);
     }
 
     private boolean isEquals(TreeNode r1, TreeNode r2) {
-        if(r1 == null && r2 == null) {
+        if (r1 == null && r2 == null) {
             return true;
         }
-        if(r1 == null) return false;
-        if(r2 == null) return false;
+        if (r1 == null) return false;
+        if (r2 == null) return false;
         return r1.data == r2.data && isEquals(r1.leftChild, r2.leftChild) && isEquals(r1.rightChild, r2.rightChild);
     }
 
@@ -196,4 +207,46 @@ public class MyBinarySearchTree {
         return isEquals(root, tree.root);
     }
 
+    private void nodesAtKDistance(TreeNode root, int k, ArrayList<TreeNode> ans, int depth) {
+        if (k <= 0) {
+            ans.add(root);
+            return;
+        }
+
+        if (depth == k) {
+            ans.add(root);
+        }
+
+        if (root.leftChild != null) {
+            nodesAtKDistance(root.leftChild, k, ans, depth + 1);
+        }
+
+        if (root.rightChild != null) {
+            nodesAtKDistance(root.rightChild, k, ans, depth + 1);
+        }
+    }
+
+    public void nodesAtKDistance(int k) {
+        ArrayList<TreeNode> ans = new ArrayList<>();
+        nodesAtKDistance(root, k, ans, 0);
+        System.out.println(ans);
+    }
+
+    public void levelOrderTraversal() {
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while(!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+
+            System.out.println(node.data);
+
+            if(node.leftChild != null) {
+                queue.offer(node.leftChild);
+            }
+            if(node.rightChild != null) {
+                queue.offer(node.rightChild);
+            }
+        }
+    }
 }
