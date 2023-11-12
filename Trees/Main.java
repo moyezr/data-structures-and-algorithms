@@ -10,6 +10,7 @@ public class Main {
             tree.insert(num);
         }
 
-        System.out.println(tree.findNode(-24));
+//        System.out.println(tree.findNode(-24));
+        tree.inOrderTraversal();
     }
 }

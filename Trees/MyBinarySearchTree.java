@@ -76,10 +76,49 @@ public class MyBinarySearchTree {
 
         if(value == root.data) {
             return true;
-        } else if(value <= root.data) {
+        } else if(value < root.data) {
          return findNode(root.leftChild, value);
         } else {
             return findNode(root.rightChild, value);
         }
+    }
+
+    public void preOrderTraversal() {
+        preOrderTraversal(root);
+    }
+    private void preOrderTraversal(TreeNode root) {
+        if(root == null) return;
+
+        // Pre-Order: Root -> Left -> Right
+
+        System.out.print(root.data + "  ");
+        preOrderTraversal(root.leftChild);
+        preOrderTraversal(root.rightChild);
+    }
+
+    public void postOrderTraversal() {
+        postOrderTraversal(root);
+    }
+
+    private void postOrderTraversal(TreeNode root) {
+        if(root == null) return;
+
+        // Pre-Order: Root -> Left -> Right
+        preOrderTraversal(root.leftChild);
+        preOrderTraversal(root.rightChild);
+        System.out.print(root.data + "  ");
+    }
+
+    public void inOrderTraversal() {
+        postOrderTraversal(root);
+    }
+
+    private void inOrderTraversal(TreeNode root) {
+        if(root == null) return;
+
+        // Pre-Order: Root -> Left -> Right
+        preOrderTraversal(root.leftChild);
+        System.out.print(root.data + "  ");
+        preOrderTraversal(root.rightChild);
     }
 }
