@@ -182,4 +182,18 @@ public class MyBinarySearchTree {
         if(root == null) return null;
         return getMin(root);
     }
+
+    private boolean isEquals(TreeNode r1, TreeNode r2) {
+        if(r1 == null && r2 == null) {
+            return true;
+        }
+        if(r1 == null) return false;
+        if(r2 == null) return false;
+        return r1.data == r2.data && isEquals(r1.leftChild, r2.leftChild) && isEquals(r1.rightChild, r2.rightChild);
+    }
+
+    public boolean isEquals(MyBinarySearchTree tree) {
+        return isEquals(root, tree.root);
+    }
+
 }
