@@ -134,10 +134,43 @@ public class MyBinarySearchTree {
             return depth;
         } else if(value < root.data) {
             return findDepth(root.leftChild, value, depth + 1);
-        } else {
-            return findDepth(root.rightChild, value, depth + 1);
+        } else return findDepth(root.rightChild, value, depth + 1);
+    }
+
+    public int heightOfTree(int value) {
+        return heightOfTree(root, value);
+    }
+
+    private int heightOfTree(TreeNode root, int value) {
+        if(root == null) return -1;
+
+        if(root.leftChild == null && root.rightChild == null) {
+            return 0;
         }
 
+        int myHeight = Math.max(heightOfTree(root.leftChild, value), heightOfTree(root.rightChild, value)) + 1;
+
+        return myHeight;
     }
+
+    public int heightOfNode(int value) {
+        return heightOfNode(root, value);
+    }
+
+
+    private int heightOfNode(TreeNode root, int value) {
+        if(root == null) {
+            return -1;
+        }
+
+        if(root.data == value) {
+            return heightOfTree(root, value);
+        } else if(value < root.data) {
+            return heightOfTree(root.leftChild, value);
+        } else {
+            return heightOfTree(root.rightChild, value);
+        }
+    }
+
 
 }

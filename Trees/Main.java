@@ -12,7 +12,9 @@ public class Main {
 
 //        System.out.println(tree.findNode(-24));
 //        tree.inOrderTraversal();
-        System.out.println(tree.findDepth(3));
+//        System.out.println(tree.findDepth(3));
+        System.out.println(tree.heightOfNode(1));
+
     }
 
 }
