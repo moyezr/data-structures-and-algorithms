@@ -121,4 +121,23 @@ public class MyBinarySearchTree {
         System.out.print(root.data + "  ");
         inOrderTraversal(root.rightChild);
     }
+
+    public int findDepth(int value) {
+        return findDepth(root, value, 0);
+    }
+    private int findDepth(TreeNode root, int value, int depth){
+        if(root == null) {
+            return -1;
+        }
+
+        if(root.data == value) {
+            return depth;
+        } else if(value < root.data) {
+            return findDepth(root.leftChild, value, depth + 1);
+        } else {
+            return findDepth(root.rightChild, value, depth + 1);
+        }
+
+    }
+
 }

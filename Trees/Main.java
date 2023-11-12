@@ -11,6 +11,8 @@ public class Main {
         }
 
 //        System.out.println(tree.findNode(-24));
-        tree.inOrderTraversal();
+//        tree.inOrderTraversal();
+        System.out.println(tree.findDepth(3));
     }
+
 }
