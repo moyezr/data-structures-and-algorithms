@@ -172,5 +172,14 @@ public class MyBinarySearchTree {
         }
     }
 
-
+    private TreeNode getMin(TreeNode root) {
+        if(root.leftChild == null) {
+            return root;
+        }
+        return getMin(root.leftChild);
+    }
+    public TreeNode getMin() {
+        if(root == null) return null;
+        return getMin(root);
+    }
 }
