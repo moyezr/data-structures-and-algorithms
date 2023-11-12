@@ -103,22 +103,22 @@ public class MyBinarySearchTree {
     private void postOrderTraversal(TreeNode root) {
         if(root == null) return;
 
-        // Pre-Order: Root -> Left -> Right
-        preOrderTraversal(root.leftChild);
-        preOrderTraversal(root.rightChild);
+        // Post-Order: Left -> Right -> Root
+        postOrderTraversal(root.leftChild);
+        postOrderTraversal(root.rightChild);
         System.out.print(root.data + "  ");
     }
 
     public void inOrderTraversal() {
-        postOrderTraversal(root);
+        inOrderTraversal(root);
     }
 
     private void inOrderTraversal(TreeNode root) {
         if(root == null) return;
 
-        // Pre-Order: Root -> Left -> Right
-        preOrderTraversal(root.leftChild);
+        // InOrder: Left -> Root -> Right
+        inOrderTraversal(root.leftChild);
         System.out.print(root.data + "  ");
-        preOrderTraversal(root.rightChild);
+        inOrderTraversal(root.rightChild);
     }
 }
