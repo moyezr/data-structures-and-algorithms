@@ -1,5 +1,7 @@
 package Trees;
 
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -27,7 +29,8 @@ public class Main {
 
 //        tree.nodesAtKDistance(2);
 
-        tree.levelOrderTraversal();
+        var ans = tree.levelOrderTraversalList();
+        System.out.println(ans);
     }
 
 }

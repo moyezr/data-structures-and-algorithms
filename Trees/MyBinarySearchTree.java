@@ -3,10 +3,7 @@ package Trees;
 
 import com.sun.source.tree.Tree;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 class TreeNode {
     int data;
@@ -248,5 +245,32 @@ public class MyBinarySearchTree {
                 queue.offer(node.rightChild);
             }
         }
+    }
+
+    public List<List<Integer>> levelOrderTraversalList() {
+        List<List<Integer>> ans = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> temp = new LinkedList<>();
+            for(int i =0; i < size; i++) {
+                TreeNode node = queue.poll();
+                temp.add(node.data);
+
+                if(node.rightChild != null)
+                queue.offer(node.rightChild);
+
+                if(node.leftChild != null)
+                    queue.offer(node.leftChild);
+
+            }
+
+            ans.add(temp);
+        }
+
+        return ans;
     }
 }
