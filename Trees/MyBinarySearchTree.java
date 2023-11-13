@@ -265,7 +265,6 @@ public class MyBinarySearchTree {
 
                 if(node.leftChild != null)
                     queue.offer(node.leftChild);
-
             }
 
             ans.add(temp);
