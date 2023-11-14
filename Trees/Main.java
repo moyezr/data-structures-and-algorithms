@@ -20,7 +20,7 @@ public class Main {
 //        System.out.println(tree.findNode(-24));
 //        tree.inOrderTraversal();
 //        System.out.println(tree.findDepth(3));
-//        System.out.println(tree.heightOfNode(1));
+//        System.out.println(tree.heightOfNode(8));
 
 
 //        System.out.println(tree.getMin());
@@ -29,8 +29,11 @@ public class Main {
 
 //        tree.nodesAtKDistance(2);
 
-        var ans = tree.levelOrderTraversalList();
-        System.out.println(ans);
+//        var ans = tree.levelOrderTraversalList();
+//        System.out.println(ans);
+
+//        Printing the diameter of the tree
+        System.out.println(tree.diameter());
     }
 
 }

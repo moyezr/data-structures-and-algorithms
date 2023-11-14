@@ -144,18 +144,18 @@ public class MyBinarySearchTree {
         } else return findDepth(root.rightChild, value, depth + 1);
     }
 
-    public int heightOfTree(int value) {
-        return heightOfTree(root, value);
+    public int heightOfTree() {
+        return heightOfTree(root);
     }
 
-    private int heightOfTree(TreeNode root, int value) {
+    private int heightOfTree(TreeNode root) {
         if (root == null) return -1;
 
         if (root.leftChild == null && root.rightChild == null) {
             return 0;
         }
 
-        int myHeight = Math.max(heightOfTree(root.leftChild, value), heightOfTree(root.rightChild, value)) + 1;
+        int myHeight = Math.max(heightOfTree(root.leftChild), heightOfTree(root.rightChild)) + 1;
 
         return myHeight;
     }
@@ -171,11 +171,11 @@ public class MyBinarySearchTree {
         }
 
         if (root.data == value) {
-            return heightOfTree(root, value);
+            return heightOfTree(root);
         } else if (value < root.data) {
-            return heightOfTree(root.leftChild, value);
+            return heightOfNode(root.leftChild, value);
         } else {
-            return heightOfTree(root.rightChild, value);
+            return heightOfNode(root.rightChild, value);
         }
     }
 
@@ -233,15 +233,15 @@ public class MyBinarySearchTree {
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
 
-        while(!queue.isEmpty()) {
+        while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
 
             System.out.println(node.data);
 
-            if(node.leftChild != null) {
+            if (node.leftChild != null) {
                 queue.offer(node.leftChild);
             }
-            if(node.rightChild != null) {
+            if (node.rightChild != null) {
                 queue.offer(node.rightChild);
             }
         }
@@ -253,17 +253,17 @@ public class MyBinarySearchTree {
         queue.offer(root);
 
 
-        while(!queue.isEmpty()) {
+        while (!queue.isEmpty()) {
             int size = queue.size();
             List<Integer> temp = new LinkedList<>();
-            for(int i =0; i < size; i++) {
+            for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
                 temp.add(node.data);
 
-                if(node.rightChild != null)
-                queue.offer(node.rightChild);
+                if (node.rightChild != null)
+                    queue.offer(node.rightChild);
 
-                if(node.leftChild != null)
+                if (node.leftChild != null)
                     queue.offer(node.leftChild);
             }
 
@@ -271,5 +271,20 @@ public class MyBinarySearchTree {
         }
 
         return ans;
+    }
+
+    public int diameter() {
+        return diameter(root);
+    }
+    private int diameter(TreeNode root) {
+        if(root == null) return 0;
+
+        int leftDia = diameter(root.leftChild);
+        int rightDia = diameter(root.rightChild);
+
+
+        int myDia = heightOfTree(root.leftChild) + 1 + heightOfTree(root.rightChild) + 1 + 1;
+
+        return Math.max(leftDia, Math.max(rightDia, myDia));
     }
 }
