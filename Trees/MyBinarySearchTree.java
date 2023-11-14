@@ -374,4 +374,38 @@ public class MyBinarySearchTree {
 
         System.out.println(result);
     }
+
+    // Vertical Order Traversal
+    public void verticalTraversalSolver(TreeNode root, Map<Integer, List<Integer>> map, int x) {
+        if (root == null) {
+            return;
+        }
+
+        if (!map.containsKey(x)) {
+            map.put(x, new ArrayList<>());
+        }
+
+        map.get(x).add(root.data);
+        if (root.leftChild != null) {
+             verticalTraversalSolver(root.leftChild, map, x - 1);
+        }
+         verticalTraversalSolver(root.rightChild, map, x + 1);
+    }
+
+    public void verticalTraversal() {
+        List<List<Integer>> result = new ArrayList<>();
+        Map<Integer, List<Integer>> map = new TreeMap<>();
+
+         verticalTraversalSolver(root, map, 0);
+
+        for(int key: map.keySet()) {
+            Collections.sort(map.get(key));
+            result.add(map.get(key));
+        }
+
+        System.out.println(map);
+
+        System.out.println(result);
+    }
+
 }

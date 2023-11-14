@@ -38,7 +38,9 @@ public class Main {
 //        System.out.println(tree.diameter());
 
 //        tree.zigzagTraversal();
-        tree.boundaryTraversal();
+//        tree.boundaryTraversal();
+
+        tree.verticalTraversal();
     }
 
 }
