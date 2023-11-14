@@ -3,6 +3,7 @@ package Trees;
 
 import com.sun.source.tree.Tree;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 class TreeNode {
@@ -236,7 +237,7 @@ public class MyBinarySearchTree {
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
 
-            System.out.println(node.data);
+            System.out.print(node.data + " ");
 
             if (node.leftChild != null) {
                 queue.offer(node.leftChild);
@@ -276,8 +277,9 @@ public class MyBinarySearchTree {
     public int diameter() {
         return diameter(root);
     }
+
     private int diameter(TreeNode root) {
-        if(root == null) return 0;
+        if (root == null) return 0;
 
         int leftDia = diameter(root.leftChild);
         int rightDia = diameter(root.rightChild);
@@ -286,5 +288,90 @@ public class MyBinarySearchTree {
         int myDia = heightOfTree(root.leftChild) + 1 + heightOfTree(root.rightChild) + 1 + 1;
 
         return Math.max(leftDia, Math.max(rightDia, myDia));
+    }
+
+    public void zigzagTraversal() {
+        Queue<TreeNode> queue = new LinkedList<>();
+        boolean goRight = true;
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+
+            System.out.print(node.data + " ");
+            goRight = !goRight;
+
+            if (goRight) {
+                if (node.leftChild != null) {
+                    queue.offer(node.leftChild);
+                }
+                if (node.rightChild != null) {
+                    queue.offer(node.rightChild);
+                }
+            } else {
+                if (node.rightChild != null) {
+                    queue.offer(node.rightChild);
+                }
+                if (node.leftChild != null) {
+                    queue.offer(node.leftChild);
+                }
+            }
+
+        }
+    }
+
+    void traverseLeaf(TreeNode root, ArrayList<Integer> result) {
+        if (root == null) return;
+
+        if (root.leftChild == null && root.rightChild == null) {
+            result.add(root.data);
+            return;
+        }
+
+        traverseLeaf(root.leftChild, result);
+        traverseLeaf(root.rightChild, result);
+    }
+
+    void traverseLeft(TreeNode root, ArrayList<Integer> result) {
+        if (root == null) return;
+        if (root.leftChild == null && root.rightChild == null) {
+            return;
+        }
+
+        result.add(root.data);
+
+        if (root.leftChild != null) {
+            traverseLeft(root.leftChild, result);
+        } else {
+            traverseLeft(root.rightChild, result);
+        }
+    }
+
+    void traverseRight(TreeNode root, ArrayList<Integer> result) {
+        if (root == null) return;
+        if (root.leftChild == null && root.rightChild == null) {
+            return;
+        }
+
+        if (root.rightChild != null) {
+            traverseRight(root.rightChild, result);
+        } else {
+            traverseRight(root.leftChild, result);
+        }
+        result.add(root.data);
+    }
+
+    public void boundaryTraversal() {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+
+        if (root == null) return;
+
+        result.add(root.data);
+        traverseLeft(root.leftChild, result);
+        traverseLeaf(root.leftChild, result);
+        traverseLeaf(root.rightChild, result);
+        traverseRight(root.rightChild, result);
+
+        System.out.println(result);
     }
 }

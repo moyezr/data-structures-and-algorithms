@@ -32,8 +32,13 @@ public class Main {
 //        var ans = tree.levelOrderTraversalList();
 //        System.out.println(ans);
 
+//        tree.levelOrderTraversal();
+
 //        Printing the diameter of the tree
-        System.out.println(tree.diameter());
+//        System.out.println(tree.diameter());
+
+//        tree.zigzagTraversal();
+        tree.boundaryTraversal();
     }
 
 }
