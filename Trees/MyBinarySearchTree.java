@@ -105,7 +105,7 @@ public class MyBinarySearchTree {
 
     public void postOrderTraversal() {
         postOrderTraversal(root);
-    }
+}
 
     private void postOrderTraversal(TreeNode root) {
         if (root == null) return;
@@ -406,6 +406,35 @@ public class MyBinarySearchTree {
         System.out.println(map);
 
         System.out.println(result);
+    }
+
+
+    public void preOrderTraversalList(TreeNode root, Queue<TreeNode> queue) {
+        if(root == null) {
+            return;
+        }
+
+        queue.offer(root);
+        preOrderTraversalList(root.leftChild, queue);
+        preOrderTraversalList(root.rightChild, queue);
+    }
+
+    public LinkedList<TreeNode> flatten() {
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        preOrderTraversalList(root,queue);
+        LinkedList<TreeNode> linkedList =  new LinkedList<>();
+
+        while(!queue.isEmpty()) {
+            TreeNode current = queue.poll();
+            TreeNode next = queue.peek();
+
+            current.rightChild = next;
+            current.leftChild = null;
+            linkedList.add(current);
+        }
+
+        return linkedList;
     }
 
 }

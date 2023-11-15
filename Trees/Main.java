@@ -40,7 +40,8 @@ public class Main {
 //        tree.zigzagTraversal();
 //        tree.boundaryTraversal();
 
-        tree.verticalTraversal();
+//        tree.verticalTraversal();
+        System.out.println(tree.flatten());
     }
 
 }
