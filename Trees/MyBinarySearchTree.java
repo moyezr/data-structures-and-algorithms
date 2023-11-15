@@ -105,7 +105,7 @@ public class MyBinarySearchTree {
 
     public void postOrderTraversal() {
         postOrderTraversal(root);
-}
+    }
 
     private void postOrderTraversal(TreeNode root) {
         if (root == null) return;
@@ -387,18 +387,18 @@ public class MyBinarySearchTree {
 
         map.get(x).add(root.data);
         if (root.leftChild != null) {
-             verticalTraversalSolver(root.leftChild, map, x - 1);
+            verticalTraversalSolver(root.leftChild, map, x - 1);
         }
-         verticalTraversalSolver(root.rightChild, map, x + 1);
+        verticalTraversalSolver(root.rightChild, map, x + 1);
     }
 
     public void verticalTraversal() {
         List<List<Integer>> result = new ArrayList<>();
         Map<Integer, List<Integer>> map = new TreeMap<>();
 
-         verticalTraversalSolver(root, map, 0);
+        verticalTraversalSolver(root, map, 0);
 
-        for(int key: map.keySet()) {
+        for (int key : map.keySet()) {
             Collections.sort(map.get(key));
             result.add(map.get(key));
         }
@@ -410,7 +410,7 @@ public class MyBinarySearchTree {
 
 
     public void preOrderTraversalList(TreeNode root, Queue<TreeNode> queue) {
-        if(root == null) {
+        if (root == null) {
             return;
         }
 
@@ -422,10 +422,10 @@ public class MyBinarySearchTree {
     public LinkedList<TreeNode> flatten() {
 
         Queue<TreeNode> queue = new LinkedList<>();
-        preOrderTraversalList(root,queue);
-        LinkedList<TreeNode> linkedList =  new LinkedList<>();
+        preOrderTraversalList(root, queue);
+        LinkedList<TreeNode> linkedList = new LinkedList<>();
 
-        while(!queue.isEmpty()) {
+        while (!queue.isEmpty()) {
             TreeNode current = queue.poll();
             TreeNode next = queue.peek();
 
@@ -437,4 +437,27 @@ public class MyBinarySearchTree {
         return linkedList;
     }
 
+    public void inOrderMorrisTraversal() {
+        TreeNode current = root;
+
+        while (current != null) {
+            if (current.leftChild == null) {
+                System.out.print(current.data + " ");
+                current = current.rightChild;
+            } else {
+                TreeNode pred = current.leftChild;
+                while (pred.rightChild != null && pred.rightChild != current)
+                    pred = pred.rightChild;
+
+                if (pred.rightChild == null) {
+                    pred.rightChild = current;
+                    current = current.leftChild;
+                } else {
+                    pred.rightChild = null;
+                    System.out.print(current.data + " ");
+                    current = current.rightChild;
+                }
+            }
+        }
+    }
 }

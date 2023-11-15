@@ -41,7 +41,16 @@ public class Main {
 //        tree.boundaryTraversal();
 
 //        tree.verticalTraversal();
-        System.out.println(tree.flatten());
+//        System.out.println(tree.flatten());
+
+        System.out.print("Normal Inorder Traversal ");
+        tree.inOrderTraversal();
+
+        System.out.println();
+
+        System.out.print("Morris In order Traversal ");
+        tree.inOrderMorrisTraversal();
     }
+
 
 }
