@@ -46,15 +46,17 @@ public class AVLTree {
 
         if (!isBalanced(root)) {
             if (isLeftHeavy(root)) {
-                if(getBalanceFactor(root.leftChild) < 0) {
-                    System.out.println("LEFT ROTATE " + root.leftChild);
+                if (getBalanceFactor(root.leftChild) < 0) {
+                    root.leftChild = leftRotate(root.leftChild);
                 }
-                System.out.println("RIGHT ROTATE " + root);
+
+                root = rightRotate(root);
             } else if (isRightHeavy(root)) {
-                if(getBalanceFactor(root.rightChild) > 0) {
-                    System.out.println("Right ROTATE " + root.rightChild);
+                if (getBalanceFactor(root.rightChild) > 0) {
+                    root.rightChild = rightRotate(root.rightChild);
                 }
-                System.out.println("LEFT ROTATE " + root);
+
+                root = leftRotate(root);
             }
         }
 
@@ -103,4 +105,21 @@ public class AVLTree {
         return balanceFactor < -1;
     }
 
+    private AVLNode leftRotate(AVLNode root) {
+        if (root == null) return null;
+        AVLNode newRoot = root.rightChild;
+        root.rightChild = newRoot.leftChild;
+        newRoot.leftChild = root;
+        return newRoot;
+    }
+
+    private AVLNode rightRotate(AVLNode root) {
+        if (root == null) return null;
+
+        AVLNode newRoot = root.leftChild;
+        root.leftChild = newRoot.rightChild;
+        newRoot.rightChild = root;
+        return newRoot;
+    }
 }
+
