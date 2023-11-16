@@ -44,8 +44,18 @@ public class AVLTree {
         // BalanceFactor = H(L) - H(R)
         // B.F < -1 || B.F > 1 --> It means that the tree is imbalanced.
 
-        if (!isBalance(root)) {
-            System.out.println("There is an imbalance at node" + root);
+        if (!isBalanced(root)) {
+            if (isLeftHeavy(root)) {
+                if(getBalanceFactor(root.leftChild) < 0) {
+                    System.out.println("LEFT ROTATE " + root.leftChild);
+                }
+                System.out.println("RIGHT ROTATE " + root);
+            } else if (isRightHeavy(root)) {
+                if(getBalanceFactor(root.rightChild) > 0) {
+                    System.out.println("Right ROTATE " + root.rightChild);
+                }
+                System.out.println("LEFT ROTATE " + root);
+            }
         }
 
         return root;
@@ -69,12 +79,28 @@ public class AVLTree {
         return node.height;
     }
 
-    private boolean isBalance(AVLNode node) {
+    private boolean isBalanced(AVLNode node) {
         if (node == null) return true;
 
         int balanceFactor = getBalanceFactor(node);
 
         return balanceFactor >= -1 && balanceFactor <= 1;
+    }
+
+    private boolean isLeftHeavy(AVLNode node) {
+        if (node == null) return false;
+
+        int balanceFactor = getBalanceFactor(node);
+
+        return balanceFactor > 1;
+    }
+
+    private boolean isRightHeavy(AVLNode node) {
+        if (node == null) return false;
+
+        int balanceFactor = getBalanceFactor(node);
+
+        return balanceFactor < -1;
     }
 
 }
