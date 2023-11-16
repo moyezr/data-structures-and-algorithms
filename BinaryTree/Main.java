@@ -1,6 +1,4 @@
-package Trees;
-
-import java.util.List;
+package BinaryTree;
 
 public class Main {
 
