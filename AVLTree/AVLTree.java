@@ -6,8 +6,11 @@ class AVLNode {
     public AVLNode leftChild;
     public AVLNode rightChild;
 
+    public int height;
+
     public AVLNode(int value) {
         this.value = value;
+        this.height = 0;
     }
 
     public String toString() {
@@ -35,11 +38,43 @@ public class AVLTree {
             root.rightChild = insert(root.rightChild, value);
         }
 
+        root.height = Math.max(getHeight(root.leftChild), getHeight(root.rightChild)) + 1;
+
+        // Check for Imbalance
+        // BalanceFactor = H(L) - H(R)
+        // B.F < -1 || B.F > 1 --> It means that the tree is imbalanced.
+
+        if (!isBalance(root)) {
+            System.out.println("There is an imbalance at node" + root);
+        }
+
         return root;
     }
 
     public void insert(int value) {
         root = insert(this.root, value);
+    }
+
+    private int getBalanceFactor(AVLNode node) {
+        if (node == null) {
+            return 0;
+        }
+
+        return getHeight(node.leftChild) - getHeight(node.rightChild);
+    }
+
+    private int getHeight(AVLNode node) {
+        if (node == null) return -1;
+
+        return node.height;
+    }
+
+    private boolean isBalance(AVLNode node) {
+        if (node == null) return true;
+
+        int balanceFactor = getBalanceFactor(node);
+
+        return balanceFactor >= -1 && balanceFactor <= 1;
     }
 
 }
