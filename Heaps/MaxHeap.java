@@ -11,6 +11,9 @@ public class MaxHeap {
         this.size = 0;
     }
 
+    public boolean isEmpty() {
+        return size == 0;
+    }
     public void insert(int value) {
         // Insert the element at available slot
 
@@ -25,7 +28,50 @@ public class MaxHeap {
             index = getParentIndex(index);
         }
     }
+    public int remove() {
+        int itemToRemove = items[0];
 
+        items[0] = items[size - 1];
+        size--;
+
+        // Bubble Down
+        int index = 0;
+        while(index < size && !validParent(index)) {
+            int indexOfLargestChild = getLargestChildIndex(index);
+
+            swapElementsWithIndex(index, indexOfLargestChild);
+            index = indexOfLargestChild;
+        }
+
+        return itemToRemove;
+    }
+
+    private int getLargestChildIndex(int index) {
+        if(!hasLeftChild(index)) return index;
+        if(!hasRightChild(index)) {
+            getLeftChildIndex(index);
+        }
+
+        if(getLeftChild(index) > getRightChild(index)) {
+            return getLeftChildIndex(index);
+        } else {
+            return getRightChildIndex(index);
+        }
+    }
+
+    private boolean validParent(int index) {
+        if(!hasLeftChild(index) && !hasRightChild(index)) {
+            return true;
+        }
+
+        if(!hasLeftChild(index)) return false;
+
+        if(!hasRightChild(index)) {
+            return items[index] > getLeftChild(index);
+        }
+
+        return items[index] > getLeftChild(index) && items[index] > getRightChild(index);
+    }
     private int getParentIndex(int childIndex) {
         return (childIndex - 1) / 2;
     }
@@ -39,4 +85,28 @@ public class MaxHeap {
         items[index1] = items[index2];
         items[index2] = temp;
     }
+
+    private int getLeftChildIndex(int index) {
+        return index * 2 + 1;
+    }
+    private int getRightChildIndex(int index) {
+        return index * 2 + 2;
+    }
+
+    private int getRightChild(int index) {
+        return items[getRightChildIndex(index)];
+    }
+
+    private int getLeftChild(int index) {
+        return items[getLeftChildIndex(index)];
+    }
+
+    private boolean hasLeftChild(int index) {
+        return getLeftChildIndex(index) <= size;
+    }
+
+    private boolean hasRightChild(int index) {
+        return getRightChildIndex(index) <= size;
+    }
+
 }
