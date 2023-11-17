@@ -1,6 +1,8 @@
 package Trie;
 
 import javax.swing.plaf.basic.BasicTreeUI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -28,11 +30,15 @@ class TrieNode {
         return this.children.get(ch);
     }
 
+    public TrieNode[] getAllChildren() {
+        return this.children.values().toArray(new TrieNode[0]);
+    }
     public String toString() {
-        return ""+value;
+        return "" + value;
     }
 
 }
+
 public class Trie {
     private TrieNode root;
 
@@ -44,14 +50,47 @@ public class Trie {
     public void insert(String word) {
         TrieNode current = root;
 
-        for(char ch:  word.toLowerCase().toCharArray()) {
+        for (char ch : word.toLowerCase().toCharArray()) {
             // If there is no child for ch in current, we've to create one.
-            if(!current.hasChild(ch))
+            if (!current.hasChild(ch))
                 current.insertChild(ch);
 
             current = current.getChild(ch);
         }
 
         current.isEndOfWord = true;
+    }
+
+    private void searchForAllPossibleWords(TrieNode node, String pre, List<String> result) {
+        if(node == null) return;
+
+
+        if(node.isEndOfWord) {
+            result.add(pre);
+        }
+
+        for(TrieNode child: node.getAllChildren()) {
+            searchForAllPossibleWords(child, pre + child.value, result);
+        }
+    }
+    public TrieNode getLastNodeForWordPrefix(TrieNode root, String prefix, int index) {
+        if (index == prefix.length()) {
+            return root;
+        }
+
+        char ch = prefix.charAt(index);
+
+            TrieNode nextNode = root.getChild(ch);
+            return getLastNodeForWordPrefix(nextNode, prefix, index + 1);
+
+    }
+
+    public List<String> autoComplete(String prefix) {
+        List<String> result = new ArrayList<>();
+
+        TrieNode startingPoint = getLastNodeForWordPrefix(root, prefix, 0);
+//        System.out.println(startingPoint);
+        searchForAllPossibleWords(startingPoint, prefix , result);
+        return result;
     }
 }

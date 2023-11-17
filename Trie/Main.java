@@ -7,9 +7,24 @@ public class Main {
     public static void main(String[] args) {
         Trie trie = new Trie();
 
-        trie.insert("car");
-        trie.insert("carpet");
+        String[] words = new String[]{
+                "cat",
+                "car",
+                "carpool",
+                "carpool",
+                "carpooling",
+                "coding",
+                "coder",
+                "codecommunity",
+                "book",
+                "bag",
+                "baggage"
+        };
 
-        System.out.println("DONE");
+        for(String word: words) {
+            trie.insert(word);
+        }
+
+        System.out.println(  trie.autoComplete("bag"));
     }
 }
