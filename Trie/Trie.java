@@ -37,6 +37,7 @@ class TrieNode {
     public void removeChild(TrieNode node) {
         this.children.remove(node.value);
     }
+
     public String toString() {
         return "" + value;
     }
@@ -66,17 +67,18 @@ public class Trie {
     }
 
     private void searchForAllPossibleWords(TrieNode node, String pre, List<String> result) {
-        if(node == null) return;
+        if (node == null) return;
 
 
-        if(node.isEndOfWord) {
+        if (node.isEndOfWord) {
             result.add(pre);
         }
 
-        for(TrieNode child: node.getAllChildren()) {
+        for (TrieNode child : node.getAllChildren()) {
             searchForAllPossibleWords(child, pre + child.value, result);
         }
     }
+
     public TrieNode getLastNodeForWordPrefix(TrieNode root, String prefix, int index) {
         if (index == prefix.length()) {
             return root;
@@ -84,8 +86,8 @@ public class Trie {
 
         char ch = prefix.charAt(index);
 
-            TrieNode nextNode = root.getChild(ch);
-            return getLastNodeForWordPrefix(nextNode, prefix, index + 1);
+        TrieNode nextNode = root.getChild(ch);
+        return getLastNodeForWordPrefix(nextNode, prefix, index + 1);
 
     }
 
@@ -94,31 +96,53 @@ public class Trie {
 
         TrieNode startingPoint = getLastNodeForWordPrefix(root, prefix, 0);
 //        System.out.println(startingPoint);
-        searchForAllPossibleWords(startingPoint, prefix , result);
+        searchForAllPossibleWords(startingPoint, prefix, result);
         return result;
     }
 
     private void remove(TrieNode root, String word, int index) {
-        if(root == null) {
+        if (root == null) {
             return;
         }
-        if(index == word.length()) {
+        if (index == word.length()) {
             root.isEndOfWord = false;
-                    return;
+            return;
         }
 
         char currentChar = word.charAt(index);
         TrieNode currentNode = root.getChild(currentChar);
-        if(currentNode == null) {
+        if (currentNode == null) {
             return;
         }
         remove(currentNode, word, index + 1);
 
-        if(currentNode.getAllChildren().length == 0 && !currentNode.isEndOfWord) {
+        if (currentNode.getAllChildren().length == 0 && !currentNode.isEndOfWord) {
             root.removeChild(currentNode);
         }
     }
-    public void remove(String word) {
 
+    private void getLongestCommonPrefix(TrieNode root, StringBuilder result) {
+        if (root.value != ' ') {
+            result.append(root.value);
+        }
+        if (root.getAllChildren().length != 1 || root.isEndOfWord) {
+            return;
+        }
+        for (TrieNode child : root.getAllChildren())
+            getLongestCommonPrefix(child, result);
+    }
+
+    public String getLongestCommonPrefix() {
+        if(root.getAllChildren().length > 1) return "";
+
+        StringBuilder result = new StringBuilder();
+
+        getLongestCommonPrefix(root, result);
+
+        return result.toString();
+    }
+
+    public void remove(String word) {
+        remove(root, word, 0);
     }
 }
