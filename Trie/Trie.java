@@ -33,6 +33,10 @@ class TrieNode {
     public TrieNode[] getAllChildren() {
         return this.children.values().toArray(new TrieNode[0]);
     }
+
+    public void removeChild(TrieNode node) {
+        this.children.remove(node.value);
+    }
     public String toString() {
         return "" + value;
     }
@@ -92,5 +96,29 @@ public class Trie {
 //        System.out.println(startingPoint);
         searchForAllPossibleWords(startingPoint, prefix , result);
         return result;
+    }
+
+    private void remove(TrieNode root, String word, int index) {
+        if(root == null) {
+            return;
+        }
+        if(index == word.length()) {
+            root.isEndOfWord = false;
+                    return;
+        }
+
+        char currentChar = word.charAt(index);
+        TrieNode currentNode = root.getChild(currentChar);
+        if(currentNode == null) {
+            return;
+        }
+        remove(currentNode, word, index + 1);
+
+        if(currentNode.getAllChildren().length == 0 && !currentNode.isEndOfWord) {
+            root.removeChild(currentNode);
+        }
+    }
+    public void remove(String word) {
+
     }
 }
