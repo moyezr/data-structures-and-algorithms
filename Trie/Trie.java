@@ -1,15 +1,31 @@
 package Trie;
 
+import javax.swing.plaf.basic.BasicTreeUI;
+import java.util.Map;
+import java.util.HashMap;
+
 class TrieNode {
     char value;
-    public TrieNode[] children;
+    private Map<Character, TrieNode> children;
 
     public boolean isEndOfWord;
 
     TrieNode(char value) {
         this.value = value;
-        this.children = new TrieNode[26];
+        this.children = new HashMap<>();
         this.isEndOfWord = false;
+    }
+
+    public boolean hasChild(char ch) {
+        return this.children.containsKey(ch);
+    }
+
+    public void insertChild(char ch) {
+        this.children.put(ch, new TrieNode(ch));
+    }
+
+    public TrieNode getChild(char ch) {
+        return this.children.get(ch);
     }
 
     public String toString() {
@@ -24,18 +40,16 @@ public class Trie {
         this.root = new TrieNode(' ');
     }
 
+
     public void insert(String word) {
         TrieNode current = root;
 
         for(char ch:  word.toLowerCase().toCharArray()) {
             // If there is no child for ch in current, we've to create one.
-            int index = ch - 'a';
+            if(!current.hasChild(ch))
+                current.insertChild(ch);
 
-            if(current.children[index] == null) {
-                current.children[index] = new TrieNode(ch);
-            }
-
-            current = current.children[index];
+            current = current.getChild(ch);
         }
 
         current.isEndOfWord = true;
