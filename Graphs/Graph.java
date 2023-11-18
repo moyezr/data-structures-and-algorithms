@@ -81,4 +81,23 @@ public class Graph {
 
         return result;
     }
+
+    private void getDFSRec(Node node, Set<Node> visited, List<Node> result) {
+        if(node == null || visited.contains(node)) {
+            return;
+        }
+
+        result.add(node);
+        visited.add(node);
+
+        for(Node child: adjacencyList.get(node)) {
+            getDFSRec(child, visited, result);
+        }
+    }
+    public List<Node> getDFS(Node initialNode) {
+        List<Node> result = new ArrayList<>();
+        getDFSRec(initialNode, new HashSet<>(), result);
+
+        return result;
+    }
 }
