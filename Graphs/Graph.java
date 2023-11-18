@@ -83,21 +83,56 @@ public class Graph {
     }
 
     private void getDFSRec(Node node, Set<Node> visited, List<Node> result) {
-        if(node == null || visited.contains(node)) {
+        if (node == null || visited.contains(node)) {
             return;
         }
 
         result.add(node);
         visited.add(node);
 
-        for(Node child: adjacencyList.get(node)) {
+        for (Node child : adjacencyList.get(node)) {
             getDFSRec(child, visited, result);
         }
     }
+
     public List<Node> getDFS(Node initialNode) {
         List<Node> result = new ArrayList<>();
         getDFSRec(initialNode, new HashSet<>(), result);
 
         return result;
+    }
+
+    private boolean hasCycle(Node node, HashSet<Node> visiting, HashSet<Node> visited) {
+        visiting.add(node);
+        if(!adjacencyList.containsKey(node)) return false;
+        for (Node child : adjacencyList.get(node)) {
+            if (visiting.contains(child)) {
+                return true;
+            }
+            if (hasCycle(child, visiting, visited)) return true;
+        }
+
+        visiting.remove(node);
+        visited.add(node);
+
+        return false;
+    }
+
+    public boolean hasCycle(Node node) {
+        List<Node> all = new ArrayList<>();
+        HashSet<Node> visiting = new HashSet<>();
+        HashSet<Node> visited = new HashSet<>();
+        for (var entry : nodes.entrySet()) {
+            all.add(entry.getValue());
+        }
+
+        for (Node n : all) {
+            if(!visited.contains(n)) {
+                if(hasCycle(n, visiting, visited)) return true;
+            }
+        }
+
+        return false;
+
     }
 }

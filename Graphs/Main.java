@@ -12,17 +12,18 @@ public class Main {
         var g = graph.createNode("G");
 
         graph.createConnection(a, b, GRAPH_DIRECTION.DIRECTED);
-        graph.createConnection(a, c, GRAPH_DIRECTION.DIRECTED);
-        graph.createConnection(b, d, GRAPH_DIRECTION.DIRECTED);
-        graph.createConnection(b, e, GRAPH_DIRECTION.DIRECTED);
-        graph.createConnection(c, f, GRAPH_DIRECTION.DIRECTED);
-        graph.createConnection(e, f, GRAPH_DIRECTION.DIRECTED);
-        graph.createConnection(d, g, GRAPH_DIRECTION.DIRECTED);
-        graph.createConnection(f, g, GRAPH_DIRECTION.DIRECTED);
+        graph.createConnection(b, c, GRAPH_DIRECTION.DIRECTED);
+        graph.createConnection(c, d, GRAPH_DIRECTION.DIRECTED);
+        graph.createConnection(d, a, GRAPH_DIRECTION.DIRECTED);
+//        graph.createConnection(c, f, GRAPH_DIRECTION.DIRECTED);
+//        graph.createConnection(e, f, GRAPH_DIRECTION.DIRECTED);
+//        graph.createConnection(d, g, GRAPH_DIRECTION.DIRECTED);
+//        graph.createConnection(f, g, GRAPH_DIRECTION.DIRECTED);
 
         System.out.println(graph);
 
         System.out.println("BFS: " + graph.getBFS(a));
         System.out.println("DFS: " + graph.getDFS(a));
+        System.out.println("Has Cycle? : " + graph.hasCycle(a));
     }
 }
