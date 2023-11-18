@@ -1,9 +1,6 @@
 package Graphs;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 enum GRAPH_DIRECTION {
@@ -62,5 +59,26 @@ public class Graph {
             sb.append(entry.getKey()).append(" -> ").append(entry.getValue()).append("\n");
         }
         return sb.toString();
+    }
+
+    public List<Node> getBFS(Node startingNode) {
+        List<Node> result = new ArrayList<>();
+        Queue<Node> q = new LinkedList<>();
+        Set<Node> visited = new HashSet<>();
+
+        q.offer(startingNode);
+        while (!q.isEmpty()) {
+            Node current = q.poll();
+            visited.add(current);
+            result.add(current);
+            for (Node child : adjacencyList.get(current)) {
+                if (!visited.contains(child)) {
+                    q.offer(child);
+                    visited.add(child);
+                }
+            }
+        }
+
+        return result;
     }
 }
