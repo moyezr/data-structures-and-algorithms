@@ -12,8 +12,19 @@ public class Graph {
     private class Node {
         public String value;
 
+        private List<Node> edges;
         public Node(String value) {
             this.value = value;
+            this.edges = new ArrayList<>();
+        }
+
+        public void addEdge(Node node) {
+            if(this.edges.contains(node)) return;
+            this.edges.add(node);
+        }
+
+        public List<Node>  getChildren() {
+            return this.edges;
         }
 
         public String toString() {
@@ -21,12 +32,10 @@ public class Graph {
         }
     }
 
-    private Map<Node, List<Node>> adjacencyList;
 
     private Map<String, Node> nodes;
 
     public Graph() {
-        this.adjacencyList = new HashMap<Node, List<Node>>();
         this.nodes = new HashMap<>();
     }
 
@@ -39,24 +48,16 @@ public class Graph {
     }
 
     public void createConnection(Node from, Node to, GRAPH_DIRECTION direction) {
-        if (!adjacencyList.containsKey(from)) {
-            adjacencyList.put(from, new ArrayList<>());
-        }
-        if (!adjacencyList.containsKey(to)) {
-            adjacencyList.put(to, new ArrayList<>());
-        }
-
-        adjacencyList.get(from).add(to);
-
-        if (direction == GRAPH_DIRECTION.UNDIRECTED) {
-            adjacencyList.get(to).add(from);
+        from.addEdge(to);
+        if(direction == GRAPH_DIRECTION.UNDIRECTED) {
+            to.addEdge(from);
         }
     }
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (var entry : adjacencyList.entrySet()) {
-            sb.append(entry.getKey()).append(" -> ").append(entry.getValue()).append("\n");
+        for(var entry: nodes.entrySet()) {
+            sb.append(entry.getKey()).append(" --> ").append(entry.getValue().getChildren()).append("\n");
         }
         return sb.toString();
     }
@@ -71,7 +72,7 @@ public class Graph {
             Node current = q.poll();
             visited.add(current);
             result.add(current);
-            for (Node child : adjacencyList.get(current)) {
+            for (Node child : current.getChildren()) {
                 if (!visited.contains(child)) {
                     q.offer(child);
                     visited.add(child);
@@ -90,7 +91,7 @@ public class Graph {
         result.add(node);
         visited.add(node);
 
-        for (Node child : adjacencyList.get(node)) {
+        for (Node child : node.getChildren()) {
             getDFSRec(child, visited, result);
         }
     }
@@ -104,13 +105,12 @@ public class Graph {
 
     private boolean hasCycle(Node node, HashSet<Node> visiting, HashSet<Node> visited) {
         visiting.add(node);
-        if(!adjacencyList.containsKey(node)) return false;
-        for (Node child : adjacencyList.get(node)) {
-            if (visiting.contains(child)) {
-                return true;
-            }
+
+        for (Node child : node.getChildren()) {
+            if (visiting.contains(child)) return true;
             if (hasCycle(child, visiting, visited)) return true;
         }
+
 
         visiting.remove(node);
         visited.add(node);
@@ -127,12 +127,42 @@ public class Graph {
         }
 
         for (Node n : all) {
-            if(!visited.contains(n)) {
-                if(hasCycle(n, visiting, visited)) return true;
+            if (!visited.contains(n)) {
+                if (hasCycle(n, visiting, visited)) return true;
             }
         }
 
         return false;
-
     }
+
+    private void solveTopoSort(Node node, Set<Node> visited, Stack<Node> stack) {
+        if (visited.contains(node)) return;
+
+        visited.add(node);
+        if (!node.getChildren().isEmpty()) {
+            for (Node child : node.getChildren()) {
+                solveTopoSort(node, visited, stack);
+            }
+        }
+
+        stack.push(node);
+    }
+
+//    public String topoSort(Node startNode) {
+//        Stack<Node> stack = new Stack<>();
+//        Set<Node> visited = new HashSet<>();
+//
+////        solveTopoSort(startNode, visited, stack);
+//        StringBuilder sb = new StringBuilder();
+//
+//        for (var entry : adjacencyList.entrySet()) {
+//            solveTopoSort(entry.getKey(), visited, stack);
+//        }
+//
+//        while (!stack.isEmpty()) {
+//            sb.append(stack.pop());
+//        }
+//
+//        return sb.toString();
+//    }
 }

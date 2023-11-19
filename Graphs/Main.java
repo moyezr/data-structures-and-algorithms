@@ -11,19 +11,18 @@ public class Main {
         var f = graph.createNode("F");
         var g = graph.createNode("G");
 
-        graph.createConnection(a, b, GRAPH_DIRECTION.DIRECTED);
-        graph.createConnection(b, c, GRAPH_DIRECTION.DIRECTED);
-        graph.createConnection(c, d, GRAPH_DIRECTION.DIRECTED);
-        graph.createConnection(d, a, GRAPH_DIRECTION.DIRECTED);
-//        graph.createConnection(c, f, GRAPH_DIRECTION.DIRECTED);
-//        graph.createConnection(e, f, GRAPH_DIRECTION.DIRECTED);
-//        graph.createConnection(d, g, GRAPH_DIRECTION.DIRECTED);
-//        graph.createConnection(f, g, GRAPH_DIRECTION.DIRECTED);
+        graph.createConnection(a, b, GRAPH_DIRECTION.UNDIRECTED);
+        graph.createConnection(b, c, GRAPH_DIRECTION.UNDIRECTED);
+        graph.createConnection(c, d, GRAPH_DIRECTION.UNDIRECTED);
+        graph.createConnection(d, a, GRAPH_DIRECTION.UNDIRECTED);
+//        graph.createConnection(c, b, GRAPH_DIRECTION.DIRECTED);
+
 
         System.out.println(graph);
 
         System.out.println("BFS: " + graph.getBFS(a));
         System.out.println("DFS: " + graph.getDFS(a));
         System.out.println("Has Cycle? : " + graph.hasCycle(a));
+//        System.out.println("Topo Srt : " + graph.topoSort(a));
     }
 }
