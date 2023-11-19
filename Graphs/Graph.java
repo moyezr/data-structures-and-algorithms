@@ -155,10 +155,6 @@ public class Graph {
         solveTopoSort(startNode, visited, stack);
         StringBuilder sb = new StringBuilder();
 
-//        for (var entry : nodes.entrySet()) {
-//            solveTopoSort(entry.getValue(), visited, stack);
-//        }
-
         while (!stack.isEmpty()) {
             sb.append(stack.pop());
         }
