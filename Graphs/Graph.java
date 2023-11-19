@@ -141,28 +141,28 @@ public class Graph {
         visited.add(node);
         if (!node.getChildren().isEmpty()) {
             for (Node child : node.getChildren()) {
-                solveTopoSort(node, visited, stack);
+                solveTopoSort(child, visited, stack);
             }
         }
 
         stack.push(node);
     }
 
-//    public String topoSort(Node startNode) {
-//        Stack<Node> stack = new Stack<>();
-//        Set<Node> visited = new HashSet<>();
-//
-////        solveTopoSort(startNode, visited, stack);
-//        StringBuilder sb = new StringBuilder();
-//
-//        for (var entry : adjacencyList.entrySet()) {
-//            solveTopoSort(entry.getKey(), visited, stack);
-//        }
-//
-//        while (!stack.isEmpty()) {
-//            sb.append(stack.pop());
-//        }
-//
-//        return sb.toString();
-//    }
+    public String topoSort(Node startNode) {
+        Stack<Node> stack = new Stack<>();
+        Set<Node> visited = new HashSet<>();
+
+        solveTopoSort(startNode, visited, stack);
+        StringBuilder sb = new StringBuilder();
+
+        for (var entry : nodes.entrySet()) {
+            solveTopoSort(entry.getValue(), visited, stack);
+        }
+
+        while (!stack.isEmpty()) {
+            sb.append(stack.pop());
+        }
+
+        return sb.toString();
+    }
 }
