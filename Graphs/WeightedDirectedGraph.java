@@ -40,10 +40,10 @@ class WeightedEdge {
         this.node = node;
     }
 }
-public class WeightedGraph {
+public class WeightedDirectedGraph {
     private Map<String, Node> nodes;
 
-    public WeightedGraph() {
+    public WeightedDirectedGraph() {
         this.nodes = new HashMap<>();
     }
 
