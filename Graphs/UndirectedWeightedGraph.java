@@ -1,9 +1,6 @@
 package Graphs;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class UndirectedWeightedGraph {
@@ -55,13 +52,36 @@ public class UndirectedWeightedGraph {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        for(var entry: nodes.entrySet()) {
-            for(var child: entry.getValue().edges) {
+        for (var entry : nodes.entrySet()) {
+            for (var child : entry.getValue().edges) {
                 sb.append(entry.getValue()).append(" -- (").append(child.weight).append(") --> ").append(child.to).append("\n");
             }
         }
 
         return sb.toString();
     }
+
+    private boolean hasCycle(Node node, Node parent, Set<Node> visited) {
+        if (visited.contains(node)) return false;
+        visited.add(node);
+
+        for (var child : node.edges) {
+            if (child.to == parent) continue;
+            if (visited.contains(child.to) || hasCycle(child.to, parent, visited)) return true;
+        }
+
+        return false;
+    }
+
+    public boolean hasCycle() {
+        for (var node : nodes.values()) {
+            if (hasCycle(node, null, new HashSet<>())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
 }
