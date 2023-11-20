@@ -67,15 +67,16 @@ public class UndirectedWeightedGraph {
 
         for (var child : node.edges) {
             if (child.to == parent) continue;
-            if (visited.contains(child.to) || hasCycle(child.to, parent, visited)) return true;
+            if (visited.contains(child.to) || hasCycle(child.to, node, visited)) return true;
         }
 
         return false;
     }
 
     public boolean hasCycle() {
+        Set<Node> visited = new HashSet<>();
         for (var node : nodes.values()) {
-            if (hasCycle(node, null, new HashSet<>())) {
+            if (hasCycle(node, null, visited)) {
                 return true;
             }
         }
