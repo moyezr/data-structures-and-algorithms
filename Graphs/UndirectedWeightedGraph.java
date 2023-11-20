@@ -16,6 +16,8 @@ public class UndirectedWeightedGraph {
             this.label = label;
             this.edges = new ArrayList<>();
         }
+
+        public 
     }
 
     private class WeightedEdge {
@@ -33,4 +35,11 @@ public class UndirectedWeightedGraph {
     public UndirectedWeightedGraph() {
         nodes = new HashMap<>();
     }
+
+    public Node createNode(String label) {
+        nodes.putIfAbsent(label, new Node(label));
+        return nodes.get(label);
+    }
+
+
 }
