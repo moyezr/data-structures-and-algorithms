@@ -1,9 +1,25 @@
 package Graphs;
 
+import javax.xml.stream.events.ProcessingInstruction;
 import java.util.*;
 
 
 public class UndirectedWeightedGraph {
+
+    private class EdgeEntry {
+        public Node node;
+        public int weight;
+        public Node parent;
+
+        public EdgeEntry(Node node, int weight, Node parent) {
+            this.node = node;
+            this.weight = weight;
+            this.parent = parent;
+        }
+
+
+    }
+
     public class Node {
         private String label;
 
@@ -84,5 +100,43 @@ public class UndirectedWeightedGraph {
         return false;
     }
 
+    public String dijkstrasAlgorithm(Node initialNode, Node toNode) {
+        Set<Node> visited = new HashSet<>();
+        Map<Node, EdgeEntry>  map = new HashMap<>();
+        PriorityQueue<EdgeEntry> queue = new PriorityQueue<>(new Comparator<EdgeEntry>() {
+        public int compare (EdgeEntry o1, EdgeEntry o2){
+                return o1.weight - o2.weight;
+        }
+        });
+
+        var entry = new EdgeEntry(initialNode, 0, null);
+        map.put(initialNode, entry);
+        queue.offer(entry);
+
+        while(!queue.isEmpty()) {
+            var top = queue.poll();
+            if(visited.contains(top.node)) continue;
+            for(var child: top.node.edges) {
+                int newDistance = top.weight + child.weight;
+                if(!map.containsKey(child.to) || newDistance < map.get(child.to).weight) {
+                    var newEntry =new EdgeEntry(child.to, newDistance, top.node);
+                    map.put(child.to, newEntry);
+                    queue.offer(newEntry);
+                }
+            }
+
+            visited.add(top.node);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        var tempEntry = map.get(toNode);
+
+        while(tempEntry != null) {
+            sb.append(tempEntry.node).append(" ");
+            tempEntry = map.get(tempEntry.parent);
+        }
+
+        return sb.reverse().toString();
+    }
 
 }
