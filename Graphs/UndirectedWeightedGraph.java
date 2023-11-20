@@ -7,7 +7,7 @@ import java.util.Map;
 
 
 public class UndirectedWeightedGraph {
-    private class Node {
+    public class Node {
         private String label;
 
         private List<WeightedEdge> edges;
@@ -52,5 +52,16 @@ public class UndirectedWeightedGraph {
         return nodes.get(label);
     }
 
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        for(var entry: nodes.entrySet()) {
+            for(var child: entry.getValue().edges) {
+                sb.append(entry.getValue()).append(" -- (").append(child.weight).append(") --> ").append(child.to).append("\n");
+            }
+        }
+
+        return sb.toString();
+    }
 
 }
