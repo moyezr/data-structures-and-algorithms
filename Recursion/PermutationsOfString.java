@@ -7,10 +7,10 @@ import java.util.Arrays;
 public class PermutationsOfString {
 
     public static void main(String[] args) {
-        System.out.println(permutationsRet("", "abc"));
+permutations("", "abc");
     }
 
-    static void permuations(String p, String up) {
+    static void permutations(String p, String up) {
         if(up.isEmpty()) {
             System.out.print("[" + p + "] ");
             return;
@@ -21,7 +21,7 @@ public class PermutationsOfString {
         for(int i = 0; i <= p.length(); i++) {
             String f = p.substring(0, i);
             String s = p.substring(i, p.length());
-            permuations(f + ch + s, up.substring(1));
+            permutations(f + ch + s, up.substring(1));
         }
     }
 

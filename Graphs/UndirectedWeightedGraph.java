@@ -31,8 +31,8 @@ public class UndirectedWeightedGraph {
         }
 
         public void addEdge(Node to, int weight) {
-            this.edges.add(new WeightedEdge(to, weight));
-            to.edges.add(new WeightedEdge(this, weight));
+            this.edges.add(new WeightedEdge(this, weight, to));
+            to.edges.add(new WeightedEdge(to, weight, this));
         }
 
         public String toString() {
@@ -44,8 +44,10 @@ public class UndirectedWeightedGraph {
         public Node to;
         public int weight;
 
-        public WeightedEdge(Node to, int weight) {
+        public Node from;
+        public WeightedEdge(Node from, int weight, Node to) {
             this.weight = weight;
+            this.from = from;
             this.to = to;
         }
 
@@ -137,6 +139,35 @@ public class UndirectedWeightedGraph {
         }
 
         return sb.reverse().toString();
+    }
+    public UndirectedWeightedGraph getMinimumSpanningTree(Node initialNode) { // Using Prim's Algorithm
+        UndirectedWeightedGraph result = new UndirectedWeightedGraph();
+
+        PriorityQueue<WeightedEdge> queue = new PriorityQueue<>(Comparator.comparing(e -> e.weight));
+
+        result.createNode(initialNode.label);
+
+        for(var edge: initialNode.edges) {
+            queue.offer(edge);
+        }
+
+        while(result.nodes.size() < nodes.size()) {
+            WeightedEdge currentEdge = queue.poll();
+            Node nextNode = currentEdge.to;
+            if(result.nodes.containsKey(nextNode.label)) continue;
+
+            result.createNode(nextNode.label);
+            result.nodes.get(currentEdge.from.label).addEdge(nextNode, currentEdge.weight);
+
+            for(var edge: nextNode.edges) {
+                if(!result.nodes.containsKey(edge.to.label)) {
+                    queue.offer(edge);
+                }
+            }
+        }
+
+        return result;
+
     }
 
 }
